@@ -1,0 +1,24 @@
+<div class="list-group usersList" >
+    <div  ng-repeat="user in users.usersList | orderBy:users.sortBy">
+
+        <div ng-click="users.userClick(user)" class="userEntry">
+            <div ng-class="$first ? 'firstUserEntry' : 'nonFirstUserEntry'">
+
+                <div class="userHeaderDiv">
+                    <img class="userImg" ng-src={{user.img}} />
+                    <h2 class="userName">{{user.name}}</h2>
+                </div>
+
+                <div class="userDetails">
+                    <p>age: {{user.age}}</p>
+                    <p>Email: {{user.email}}</p>
+                    <p>Is Active: {{user.isActive}}</p>
+                </div>
+
+                <div class="removeButtonDiv">
+                    <button class="removeButton btn btn-danger" ng-click="users.removeUser(user._id)">Remove</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

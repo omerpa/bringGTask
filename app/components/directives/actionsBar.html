@@ -1,0 +1,47 @@
+<div class="actionsRow">
+
+    <button type="button" data-toggle="modal" data-target="#myModal" class="btn  btn-primary" >Create New User</button>
+
+    <button type="button" class="btn btn-outline-success"
+            ng-class="users.isSortByAge() ? 'active btn-success' : ''"
+            ng-click="users.sortByAge()">Sort by Age</button>
+    <button type="button" class="btn btn-outline-success"
+            ng-class="!users.isSortByAge() ? 'btn-success active' : ''"
+            ng-click="users.sortByName()">Sort by Name</button>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content addUserForm">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">New User Info</h4>
+            </div>
+            <div class="modal-body" >
+                <label class="labels" for="name">Name:</label>
+                <input ng-change="users.validateNewUser()" ng-model="users.newUserInfo.name" type="text" id="name" ><br><br>
+
+                <label class="labels" for="age">Age:</label>
+                <input ng-change="users.validateNewUser()" ng-model="users.newUserInfo.age" type="number" id="age"><br><br>
+
+                <label class="labels" for="email">eMail:</label>
+                <input ng-change="users.validateNewUser()" ng-model="users.newUserInfo.email" type="eMail" id="email"><br><br>
+
+                <label class="labels" for="lon">Longitude:</label>
+                <input ng-change="users.validateNewUser()" ng-model="users.newUserInfo.longitude" type="number" id="lon"><br><br>
+
+                <label class="labels" for="lat">Latitude:</label>
+                <input ng-change="users.validateNewUser()" ng-model="users.newUserInfo.latitude" type="number" id="lat"><br><br>
+
+                <label class="labels" for="active">Active:</label>
+                <input ng-model="users.newUserInfo.isActive" id="active" type="checkbox">
+
+            </div>
+            <div class="modal-footer">
+                <button id="confirmAddModal" disabled ng-click="users.addUser()" type="button" class="btn btn-default" data-dismiss="modal">Add</button>
+            </div>
+        </div>
+
+    </div>
+</div>
