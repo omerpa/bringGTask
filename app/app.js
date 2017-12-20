@@ -21,7 +21,7 @@ bringGApp.directive('actionsBar', function() {
 // Controller
 // ====================
 
-bringGApp.controller("usersConroller",["$scope", "$window", "usersService",function(scope, window, usersService) {
+bringGApp.controller("usersConroller",["$scope", "usersService",function(scope, usersService) {
 
     // Privates
     const SORT_TYPES = {
@@ -32,6 +32,9 @@ bringGApp.controller("usersConroller",["$scope", "$window", "usersService",funct
     const MIN_USER_AGE = 5;
     const MAX_USER_AGE = 120;
     const USER_ZOOM_LEVEL = 6;
+
+    var lastInfoWindow = null,
+        markers = [];
 
     function zoomOnUser(map,user) {
         const userPos = {lat: user.latitude, lng: user.longitude};
@@ -86,9 +89,6 @@ bringGApp.controller("usersConroller",["$scope", "$window", "usersService",funct
         }
     }
 
-    var lastInfoWindow = null,
-        markers = [];
-
     // Exposed
 
     this.newUserInfo = {
@@ -98,7 +98,7 @@ bringGApp.controller("usersConroller",["$scope", "$window", "usersService",funct
         latitude : null,
         longitude: null,
         isActive: false
-    }
+    };
 
     // Become true if no JSON returns
     this.networkError = false;
@@ -110,7 +110,7 @@ bringGApp.controller("usersConroller",["$scope", "$window", "usersService",funct
     this.usersList = [];
 
     this.sortByAge = function sortByAge() {
-          this.sortBy = SORT_TYPES.age;
+        this.sortBy = SORT_TYPES.age;
     };
 
     this.sortByName = function sortByName() {
@@ -165,7 +165,7 @@ bringGApp.controller("usersConroller",["$scope", "$window", "usersService",funct
 
       this.usersList = usersService.removeUser(userId);
 
-      var markerIndexToRemove = markers.findIndex(function(marker) {
+      markerIndexToRemove = markers.findIndex(function(marker) {
           return marker.id === userId;
       });
 
@@ -174,7 +174,7 @@ bringGApp.controller("usersConroller",["$scope", "$window", "usersService",funct
           markerToRemove.marker.setMap(null);
           markers.splice(markerIndexToRemove, 1);
       }
-    }
+    };
 
     this.userClick = function userClick(user) {
         zoomOnUser(this.map, user);
@@ -210,7 +210,7 @@ bringGApp.controller("usersConroller",["$scope", "$window", "usersService",funct
         promiseInfo.userController.networkError = false;
         promiseInfo.scope.$apply();
 
-    }, function(error) {
+    }).catch(function(/*error*/) {
         promiseInfo.userController.hasUserInfo = false;
         promiseInfo.userController.networkError = true;
         promiseInfo.scope.$apply();
